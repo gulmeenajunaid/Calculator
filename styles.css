@@ -1,0 +1,48 @@
+* {
+	box-sizing: border-box;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	background: linear-gradient(to right, rgb(8, 8, 14), lightblue);
+}
+
+.calculator-grid {
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	min-height: 100vh;
+	grid-template-columns: repeat(4, 100px);
+	grid-template-rows: minmax(120px, auto) repeat(6, 100px);
+	margin-top: 50px;
+}
+.calculator-grid > button {
+	font-size: 2rem;
+	background-color: rgba(255, 255, 255, 0.8);
+	border: 2px solid white;
+}
+.calculator-grid > button:hover {
+	cursor: pointer;
+	background-color: white;
+}
+.display-screen {
+	grid-column: 1 / -1; /*to make it span the entire width, from col 1 to the last col*/
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	align-items: flex-end; /*to align items at the right end of the display*/
+	justify-content: space-around;
+	flex-direction: column;
+	padding: 10px;
+	word-wrap: break-word; /*Allow long words to be able to break and wrap onto the next line*/
+	word-break: break-all; /*To prevent overflow, word breaks should be inserted between any two characters*/
+}
+.previous {
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 1.5rem;
+}
+.output {
+	color: white;
+	font-size: 2.5rem;
+}
