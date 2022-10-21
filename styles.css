@@ -38,15 +38,15 @@ body {
 	word-wrap: break-word; /*Allow long words to be able to break and wrap onto the next line*/
 	word-break: break-all; /*To prevent overflow, word breaks should be inserted between any two characters*/
 }
-.input-screen {
+.previous-operand-text-el {
 	color: rgba(255, 255, 255, 0.8);
 	font-size: 1.5rem;
 }
-.output-screen {
+.current-operand-text-el {
 	color: white;
 	font-size: 2.5rem;
 }
 
-#equals-btn {
+.equals-btn {
 	grid-row: span 2;
 }

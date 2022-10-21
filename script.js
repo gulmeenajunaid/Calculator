@@ -1,134 +1,105 @@
-const buttonList = document.querySelectorAll("button");
-const numberBtn = document.querySelectorAll(".number");
-const operationBtn = document.querySelectorAll(".operator");
-const inputScreen = document.querySelector(".input-screen");
-const outputScreen = document.querySelector(".output-screen");
-const decimalBtn = document.querySelector(".decimal");
-const backBtn = document.querySelector(".backspace-btn");
-const clearBtn = document.querySelector(".clear-btn");
-let num1 = "";
-let num2 = "";
-let operator = "";
-let result = 0;
-
-buttonList.forEach(function (button) {
-	button.addEventListener("click", (e) => {
-		if (e.target.textContent !== "=") {
-			inputScreen.textContent += e.target.textContent;
-		}
-	});
-});
-
-numberBtn.forEach((num) => {
-	num.addEventListener("click", (e) => {
-		if (operator === "") {
-			num1 += e.target.textContent;
-			console.log("num1", num1);
-		} else {
-			num2 += e.target.textContent;
-			console.log("num2", num2);
-		}
-	});
-});
-
-operationBtn.forEach((op) => {
-	op.addEventListener("click", (e) => {
-		if (e.target.textContent !== "=") {
-			operator = e.target.textContent;
-			console.log("operator", operator);
-		} else {
-			switch (operator) {
-				case "+":
-					addition(num1, num2);
-					console.log("result:", result);
-					outputScreen.textContent = result;
-					num1 = result;
-					num2 = "";
-					break;
-
-				case "-":
-					subtraction(num1, num2);
-					console.log("result:", result);
-					outputScreen.textContent = result;
-					num1 = result;
-					num2 = "";
-					break;
-
-				case "x":
-					multiplication(num1, num2);
-					console.log("result:", result);
-					outputScreen.textContent = result;
-					num1 = result;
-					num2 = "";
-					break;
-
-				case "%":
-					percentage(num1, num2);
-					console.log("result:", result);
-					outputScreen.textContent = result;
-					num1 = result;
-					num2 = "";
-					break;
-
-				case "÷":
-					division(num1, num2);
-					console.log("result:", result);
-					outputScreen.textContent = result;
-					if (result === "ERROR!") {
-						num2 = num1 = inputScreen.textContent = "";
-					} else {
-						num1 = result;
-						num2 = "";
-					}
-					break;
-			}
-		}
-	});
-});
-
-clearBtn.addEventListener("click", (e) => {
-	clear();
-});
-
-backBtn.addEventListener(
-	"click",
-	() => (inputScreen.textContent = inputScreen.textContent.slice(0, -2))
+const allButtons = document.querySelectorAll("button");
+const numberButtons = document.querySelectorAll(".number");
+const operationButtons = document.querySelectorAll(".operator");
+const equalsButton = document.querySelector(".equals-btn");
+const backspaceButton = document.querySelector(".backspace-btn");
+const clearButton = document.querySelector(".clear-btn");
+const previousOperandTextEl = document.querySelector(
+	".previous-operand-text-el"
 );
+const currentOperandTextEl = document.querySelector(".current-operand-text-el");
+let currentOperand = "";
+let previousOperand = "";
+let operation = undefined;
 
 function clear() {
-	inputScreen.textContent = "";
-	outputScreen.textContent = "";
-	num1 = "";
-	num2 = "";
-	operator = "";
+	currentOperand = "";
+	previousOperand = "";
+	operation = undefined;
 }
-
-function addition(num1, num2) {
-	result = parseFloat(num1) + parseFloat(num2);
-	return result;
+function backSpace() {
+	currentOperand = currentOperand.toString().slice(0, -1); //Check if this is a good pattern
 }
-
-function subtraction(num1, num2) {
-	result = parseFloat(num1) - parseFloat(num2);
-	return result;
+function appendNumber(number) {
+	if (number === "." && currentOperand.includes(".")) return;
+	currentOperand = currentOperand.toString() + number.toString();
 }
-
-function multiplication(num1, num2) {
-	result = parseFloat(num1) * parseFloat(num2);
-	return result;
+function selectOperation(operator) {
+	if (currentOperand === "") return;
+	if (previousOperand !== "") {
+		calculate();
+	}
+	operation = operator;
+	previousOperand = currentOperand;
+	currentOperand = "";
 }
-
-function division(num1, num2) {
-	if (num2 === "0") {
-		result = "ERROR!";
-		return result;
+function calculate() {
+	let output = 0;
+	const previousNumber = parseFloat(previousOperand);
+	const currentNumber = parseFloat(currentOperand);
+	if (isNaN(previousNumber) || isNaN(currentNumber)) return;
+	switch (operation) {
+		case "+":
+			output = previousNumber + currentNumber;
+			break;
+		case "-":
+			output = previousNumber - currentNumber;
+			break;
+		case "x":
+			output = previousNumber * currentNumber;
+			break;
+		case "÷":
+			if (currentNumber === 0) {
+				output = "ERROR!";
+				break;
+			} else {
+				output = previousNumber / currentNumber;
+				break;
+			}
+		case "%":
+			output = (previousNumber / 100) * currentNumber;
+			break;
+		default:
+			return;
+	}
+	currentOperand = output;
+	previousOperand = "";
+	operation = "";
+}
+function updateDisplay() {
+	currentOperandTextEl.innerText = currentOperand;
+	if (operation !== undefined) {
+		previousOperandTextEl.innerText = `${previousOperand} ${operation}`;
 	} else {
-		result = parseFloat(num1) / parseFloat(num2);
-		return result;
+		previousOperandTextEl.innerText = "";
 	}
 }
 
-function percentage(num1, num2) {
-	result = (parseInt(num1) / 100) * parseInt(num2);
-	return result;
-}
+numberButtons.forEach((button) => {
+	button.addEventListener("click", () => {
+		appendNumber(button.innerText);
+		updateDisplay();
+	});
+});
+
+operationButtons.forEach((button) => {
+	button.addEventListener("click", () => {
+		selectOperation(button.innerText);
+		updateDisplay();
+	});
+});
+
+equalsButton.addEventListener("click", () => {
+	calculate();
+	updateDisplay();
+});
+
+clearButton.addEventListener("click", () => {
+	clear();
+	updateDisplay();
+});
+
+backspaceButton.addEventListener("click", () => {
+	backSpace();
+	updateDisplay();
+});
