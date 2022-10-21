@@ -1,7 +1,7 @@
 const buttonList = document.querySelectorAll("button");
 const numberBtn = document.querySelectorAll(".number");
 const operationBtn = document.querySelectorAll(".operator");
-const inputScreen = document.querySelector(".input-screen");
+const inputScreen = Array.from(document.querySelector(".input-screen"));
 const outputScreen = document.querySelector(".output-screen");
 const decimalBtn = document.querySelector(".decimal");
 const backBtn = document.querySelector(".backspace-btn");
@@ -31,6 +31,12 @@ numberBtn.forEach((num) => {
 	});
 });
 
+for (let i = 0; i < inputScreen.length; i++) {
+	result = addition(num1, num2);
+	num1 = result;
+	num2 = "";
+}
+
 operationBtn.forEach((op) => {
 	op.addEventListener("click", (e) => {
 		if (e.target.textContent !== "=") {
@@ -50,7 +56,7 @@ operationBtn.forEach((op) => {
 					subtraction(num1, num2);
 					console.log("result:", result);
 					outputScreen.textContent = result;
-					num1 = inputScreen.textContent = result;
+					num1 = result;
 					num2 = "";
 					break;
 
@@ -58,7 +64,7 @@ operationBtn.forEach((op) => {
 					multiplication(num1, num2);
 					console.log("result:", result);
 					outputScreen.textContent = result;
-					num1 = inputScreen.textContent = result;
+					num1 = result;
 					num2 = "";
 					break;
 
@@ -66,7 +72,7 @@ operationBtn.forEach((op) => {
 					percentage(num1, num2);
 					console.log("result:", result);
 					outputScreen.textContent = result;
-					num1 = inputScreen.textContent = result;
+					num1 = result;
 					num2 = "";
 					break;
 
@@ -77,7 +83,7 @@ operationBtn.forEach((op) => {
 					if (result === "ERROR!") {
 						num2 = num1 = inputScreen.textContent = "";
 					} else {
-						num1 = inputScreen.textContent = result;
+						num1 = result;
 						num2 = "";
 					}
 					break;
