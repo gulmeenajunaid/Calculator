@@ -1,7 +1,7 @@
 const buttonList = document.querySelectorAll("button");
 const numberBtn = document.querySelectorAll(".number");
 const operationBtn = document.querySelectorAll(".operator");
-const inputScreen = Array.from(document.querySelector(".input-screen"));
+const inputScreen = document.querySelector(".input-screen");
 const outputScreen = document.querySelector(".output-screen");
 const decimalBtn = document.querySelector(".decimal");
 const backBtn = document.querySelector(".backspace-btn");
@@ -21,7 +21,7 @@ buttonList.forEach(function (button) {
 
 numberBtn.forEach((num) => {
 	num.addEventListener("click", (e) => {
-		if (operator === " ") {
+		if (operator === "") {
 			num1 += e.target.textContent;
 			console.log("num1", num1);
 		} else {
@@ -30,12 +30,6 @@ numberBtn.forEach((num) => {
 		}
 	});
 });
-
-for (let i = 0; i < inputScreen.length; i++) {
-	result = addition(num1, num2);
-	num1 = result;
-	num2 = "";
-}
 
 operationBtn.forEach((op) => {
 	op.addEventListener("click", (e) => {
@@ -92,7 +86,7 @@ operationBtn.forEach((op) => {
 	});
 });
 
-clearBtn.addEventListener("click", () => {
+clearBtn.addEventListener("click", (e) => {
 	clear();
 });
 
@@ -102,11 +96,11 @@ backBtn.addEventListener(
 );
 
 function clear() {
-	inputScreen.textContent = " ";
-	outputScreen.textContent = " ";
+	inputScreen.textContent = "";
+	outputScreen.textContent = "";
 	num1 = "";
-	num2 = " ";
-	operator = " ";
+	num2 = "";
+	operator = "";
 }
 
 function addition(num1, num2) {
