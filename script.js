@@ -1,8 +1,8 @@
 const buttonList = document.querySelectorAll("button");
 const numberBtn = document.querySelectorAll(".number");
 const operationBtn = document.querySelectorAll(".operator");
-const inputExpression = document.querySelector(".input-expression");
-const computedOutput = document.querySelector(".computed-output");
+const inputScreen = document.querySelector(".input-screen");
+const outputScreen = document.querySelector(".output-screen");
 const decimalBtn = document.querySelector(".decimal");
 const backBtn = document.querySelector(".backspace-btn");
 const clearBtn = document.querySelector(".clear-btn");
@@ -14,7 +14,7 @@ let result = 0;
 buttonList.forEach(function (button) {
 	button.addEventListener("click", (e) => {
 		if (e.target.textContent !== "=") {
-			inputExpression.textContent += e.target.textContent;
+			inputScreen.textContent += e.target.textContent;
 		}
 	});
 });
@@ -41,7 +41,7 @@ operationBtn.forEach((op) => {
 				case "+":
 					addition(num1, num2);
 					console.log("result:", result);
-					computedOutput.textContent = result;
+					outputScreen.textContent = result;
 					num1 = result;
 					num2 = "";
 					break;
@@ -49,35 +49,35 @@ operationBtn.forEach((op) => {
 				case "-":
 					subtraction(num1, num2);
 					console.log("result:", result);
-					computedOutput.textContent = result;
-					num1 = inputExpression.textContent = result;
+					outputScreen.textContent = result;
+					num1 = inputScreen.textContent = result;
 					num2 = "";
 					break;
 
 				case "x":
 					multiplication(num1, num2);
 					console.log("result:", result);
-					computedOutput.textContent = result;
-					num1 = inputExpression.textContent = result;
+					outputScreen.textContent = result;
+					num1 = inputScreen.textContent = result;
 					num2 = "";
 					break;
 
 				case "%":
 					percentage(num1, num2);
 					console.log("result:", result);
-					computedOutput.textContent = result;
-					num1 = inputExpression.textContent = result;
+					outputScreen.textContent = result;
+					num1 = inputScreen.textContent = result;
 					num2 = "";
 					break;
 
 				case "÷":
 					division(num1, num2);
 					console.log("result:", result);
-					computedOutput.textContent = result;
+					outputScreen.textContent = result;
 					if (result === "ERROR!") {
-						num2 = num1 = inputExpression.textContent = "";
+						num2 = num1 = inputScreen.textContent = "";
 					} else {
-						num1 = inputExpression.textContent = result;
+						num1 = inputScreen.textContent = result;
 						num2 = "";
 					}
 					break;
@@ -92,12 +92,12 @@ clearBtn.addEventListener("click", () => {
 
 backBtn.addEventListener(
 	"click",
-	() => (inputExpression.textContent = inputExpression.textContent.slice(0, -2))
+	() => (inputScreen.textContent = inputScreen.textContent.slice(0, -2))
 );
 
 function clear() {
-	inputExpression.textContent = " ";
-	computedOutput.textContent = " ";
+	inputScreen.textContent = " ";
+	outputScreen.textContent = " ";
 	num1 = "";
 	num2 = " ";
 	operator = " ";
