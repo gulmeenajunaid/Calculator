@@ -4,9 +4,7 @@ const operationButtons = document.querySelectorAll(".operator");
 const equalsButton = document.querySelector(".equals-btn");
 const backspaceButton = document.querySelector(".backspace-btn");
 const clearButton = document.querySelector(".clear-btn");
-const previousOperandTextEl = document.querySelector(
-	".previous-operand-text-el"
-);
+const previousOperandTextEl = document.querySelector(".previous-operand-text-el");
 const currentOperandTextEl = document.querySelector(".current-operand-text-el");
 
 let currentOperand = "";
@@ -19,24 +17,20 @@ numberButtons.forEach((button) => {
 		updateDisplay();
 	});
 });
-
 operationButtons.forEach((button) => {
 	button.addEventListener("click", () => {
 		selectOperation(button.innerText);
 		updateDisplay();
 	});
 });
-
 equalsButton.addEventListener("click", () => {
 	calculate();
 	updateDisplay();
 });
-
 clearButton.addEventListener("click", () => {
 	clear();
 	updateDisplay();
 });
-
 backspaceButton.addEventListener("click", () => {
 	backSpace();
 	updateDisplay();
@@ -73,7 +67,7 @@ function calculate() {
 			break;
 		case "÷":
 			if (secondNumber === 0) {
-				output = "ERROR!";
+				output = "INFINITY!";
 				break;
 			} else {
 				output = firstNumber / secondNumber;
@@ -85,9 +79,10 @@ function calculate() {
 		default:
 			return;
 	}
+	//rounding off the decimal numbers
 	if (output.toString().includes(".")) {
 		if (output.toString().split(".")[1].length > 5) {
-			currentOperand = output.toFixed(5); //rounding off to 5 decimal digits.
+			currentOperand = output.toFixed(5); 
 		} else {
 			currentOperand = output;
 		}
