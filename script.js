@@ -44,6 +44,7 @@ backspaceButton.addEventListener("click", () => {
 
 function appendNumber(number) {
 	if (number === "." && currentOperand.includes(".")) return;
+	if (number == "0" && currentOperand == "0") return;
 	currentOperand = currentOperand.toString() + number.toString();
 }
 function selectOperation(operator) {
