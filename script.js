@@ -85,8 +85,8 @@ function calculate() {
 			return;
 	}
 	if (output.toString().includes(".")) {
-		if (output.toString().split(".")[1].length > 3) {
-			currentOperand = output.toFixed(3); //rounding off to 3 decimal digits.
+		if (output.toString().split(".")[1].length > 5) {
+			currentOperand = output.toFixed(5); //rounding off to 5 decimal digits.
 		} else {
 			currentOperand = output;
 		}
