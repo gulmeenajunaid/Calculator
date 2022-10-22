@@ -105,6 +105,7 @@ function updateDisplay() {
 	}
 }
 function clear() {
+	alert("You are about to clear everything!");
 	currentOperand = "";
 	previousOperand = "";
 	operation = undefined;
